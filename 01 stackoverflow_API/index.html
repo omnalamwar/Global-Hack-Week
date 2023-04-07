@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title> 🌟 GHW | StackOverflow API</title>
+	<link rel="stylesheet" type="text/css" href="index.css">	
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+	async function getStackExchangeUsers(){
+		const url = "https://api.stackexchange.com/2.3/users?order=desc&sort=reputation&site=stackoverflow";
+
+		//fetching using the api
+		const resp = await fetch(url);
+
+		//converting into the json data
+		const data = await resp.json();
+
+		const respData = data.items.map(item => ({
+			accountId: item.account_id,
+			displayName: item.display_name,
+			profileImage: item.profile_image,
+			reputation: item.reputation
+		}));
+
+		//outputing first users data
+		const firstData = respData[0];
+		document.getElementById('nameUser').textContent = firstData.displayName;
+		document.getElementById('repUser').textContent = firstData.reputation;
+		console.log(`User: ${firstData.displayName}, Reputation: ${firstData.reputation}`);
+	}
+	getStackExchangeUsers();
+</script>
+	
+	<div class="output animate__animated animate__jackInTheBox animate__delay-1s">
+		User: <span id="nameUser"></span>, Reputation: <span id="repUser"></span>
+	</div>
+
+	<!-- User: <span id="nameUser"></span>, Reputation: <span id="repUser"></span> -->
+</html>
